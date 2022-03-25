@@ -1,4 +1,5 @@
 import pdfminer
+##remember to install pdfminer.
 
 from io import StringIO
 from pdfminer.converter import TextConverter
@@ -18,3 +19,7 @@ with open('02488082.pdf', 'rb') as in_file:
     for page in PDFPage.create_pages(doc):
       interpreter.process_page(page)
 print(output_string.getvalue())
+
+
+##formula is below,
+#pt = companies trustworthyness . persons trustworthniess . countries trusthworthiness(lenght of report/average report length for similar firms . (buzzwords/paragraph + amount of esg information / total length of report + pictures/total words))
