@@ -1,7 +1,6 @@
 import pdfminer
 ##remember to install pdfminer.
 import collections
-
 from io import StringIO
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -60,23 +59,11 @@ def entirefilter(wordarray):
 
 #arraycreator()
 #wordarray=wordstripper(arraycreator())
-#s=set(stopwords.words('english'))
+
 
 #mostcommon100(wordstripper(arraycreator()))
 #mostcommon100(arraycreator())
-entirefilter(arraycreator())
+#entirefilter(arraycreator())
 
 
-#while i < len(arr):
 
-##formula is below,
-#pt = companies trustworthyness . persons trustworthniess . countries trusthworthiness(lenght of report/average report length for similar firms . (buzzwords/paragraph + amount of esg information / total length of report + pictures/total words))
-
-#things to need to be done
-#Length of report
-#Buzzword counter
-#total paragraphs
-#total amount of ESG buzzwords
-#Total amount of words
-#total number of pics
-#total number of words
