@@ -25,40 +25,46 @@ def arraycreator():
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         for page in PDFPage.create_pages(doc):
           interpreter.process_page(page)
-    #print(output_string.getvalue())
+    #String is created, then ensured its lower case
     string = output_string.getvalue()
     string = string.lower()
-
     #I can remove all values here
+    #This builds out the default stopwords
     stopwords = nltk.corpus.stopwords.words('english')
     #Add some aditional stopwords
     newstopwords = ['the','and',',','.','(',')','''''',':','’','The',';']
     stopwords.extend(newstopwords)
     for i in newstopwords:
         stopwords.append(i)
+    #this tokenizes the words + creates my filter
     words = word_tokenize(string)
     wordsFiltered = []
     for w in words:
         if w not in stopwords:
             wordsFiltered.append(w)
-           # print(w)
+    #Returns my Words filtered
     return wordsFiltered
 
 
+#wordstripper isn't needed if the wordsfiltered is used, as it outputs as a nice list i think
 def wordstripper(wordarray):
     arr = [x.strip() for x in wordarray.strip().split(' ')]
     return arr
 
+#This just shows me most common 250 words of an array
 def mostcommon100(wordarray):
-    print(collections.Counter(wordarray).most_common(100))
+    print(collections.Counter(wordarray).most_common(250))
 
-arraycreator()
+def entirefilter(wordarray):
+    print(collections.Counter(wordarray))
+
+#arraycreator()
 #wordarray=wordstripper(arraycreator())
 #s=set(stopwords.words('english'))
 
 #mostcommon100(wordstripper(arraycreator()))
-mostcommon100(arraycreator())
-
+#mostcommon100(arraycreator())
+entirefilter(arraycreator())
 
 
 #while i < len(arr):
