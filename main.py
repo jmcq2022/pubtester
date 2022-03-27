@@ -27,26 +27,23 @@ def arraycreator():
           interpreter.process_page(page)
     #print(output_string.getvalue())
     string = output_string.getvalue()
-    #print(string)
+    string = string.lower()
+
     #I can remove all values here
     stopwords = nltk.corpus.stopwords.words('english')
     #Add some aditional stopwords
-    newstopwords = ['the','and']
+    newstopwords = ['the','and',',','.','(',')','''''',':','’','The',';']
     stopwords.extend(newstopwords)
-    print(stopwords)
     for i in newstopwords:
         stopwords.append(i)
-    print(stopwords)
     words = word_tokenize(string)
     wordsFiltered = []
     for w in words:
         if w not in stopwords:
             wordsFiltered.append(w)
            # print(w)
-    #print(wordsFiltered)
-    print(type(words))
-    print(type(string))
-    return words
+    return wordsFiltered
+
 
 def wordstripper(wordarray):
     arr = [x.strip() for x in wordarray.strip().split(' ')]
@@ -55,7 +52,7 @@ def wordstripper(wordarray):
 def mostcommon100(wordarray):
     print(collections.Counter(wordarray).most_common(100))
 
-#arraycreator()
+arraycreator()
 #wordarray=wordstripper(arraycreator())
 #s=set(stopwords.words('english'))
 
