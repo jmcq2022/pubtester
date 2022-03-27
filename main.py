@@ -1,6 +1,7 @@
 import pdfminer
 ##remember to install pdfminer.
 import collections
+import pandas as p
 from io import StringIO
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -8,6 +9,7 @@ from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
+
 
 from nltk.corpus import stopwords
 import nltk
@@ -56,6 +58,7 @@ def mostcommon100(wordarray):
 
 def entirefilter(wordarray):
     print(collections.Counter(wordarray))
+    return()
 
 #arraycreator()
 #wordarray=wordstripper(arraycreator())
@@ -65,5 +68,17 @@ def entirefilter(wordarray):
 #mostcommon100(arraycreator())
 #entirefilter(arraycreator())
 
+def wordwriter(bsid, wordarray):
+    df = p.read_csv('wordcount.csv')
+    #print(df)
+    if bsid in df.bsid.values:
+        print('bsid already created')
+    else:
+        df2 = p.DataFrame.from_dict(collections.Counter(wordarray),orient='index').reset_index()
+        #add bsid onto it
+        df2['bsid'] = bsid
+        df2 = p.concat([df2,df])
+        df2.to_csv('wordcount.csv', index=True)
+        print('Added length  to dataframe')
 
-
+wordwriter(102,arraycreator())
