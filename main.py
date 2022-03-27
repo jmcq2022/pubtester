@@ -10,32 +10,57 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
 
-output_string = StringIO()
-with open('02488082.pdf', 'rb') as in_file:
-    parser = PDFParser(in_file)
-    doc = PDFDocument(parser)
-    rsrcmgr = PDFResourceManager()
-    device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
-    interpreter = PDFPageInterpreter(rsrcmgr, device)
-    for page in PDFPage.create_pages(doc):
-      interpreter.process_page(page)
-#print(output_string.getvalue())
-string = output_string.getvalue()
+from nltk.corpus import stopwords
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 
-#figuring out how to count each word
-arr = [ x.strip() for x in string.strip().split(' ') ]
+def arraycreator():
+    output_string = StringIO()
+    with open('02488082.pdf', 'rb') as in_file:
+        parser = PDFParser(in_file)
+        doc = PDFDocument(parser)
+        rsrcmgr = PDFResourceManager()
+        device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
+        interpreter = PDFPageInterpreter(rsrcmgr, device)
+        for page in PDFPage.create_pages(doc):
+          interpreter.process_page(page)
+    #print(output_string.getvalue())
+    string = output_string.getvalue()
+    #print(string)
+    #I can remove all values here
+    stopwords = nltk.corpus.stopwords.words('english')
+    #Add some aditional stopwords
+    newstopwords = ['the','and']
+    stopwords.extend(newstopwords)
+    print(stopwords)
+    for i in newstopwords:
+        stopwords.append(i)
+    print(stopwords)
+    words = word_tokenize(string)
+    wordsFiltered = []
+    for w in words:
+        if w not in stopwords:
+            wordsFiltered.append(w)
+           # print(w)
+    #print(wordsFiltered)
+    print(type(words))
+    print(type(string))
+    return words
 
-#print (arr)
-#print (arr.count('the'))
-x = len(arr)
-#print(x)
-i=0
-n = len(arr)
-# function to count
+def wordstripper(wordarray):
+    arr = [x.strip() for x in wordarray.strip().split(' ')]
+    return arr
 
-print(collections.Counter(arr).most_common(100))
+def mostcommon100(wordarray):
+    print(collections.Counter(wordarray).most_common(100))
 
+#arraycreator()
+#wordarray=wordstripper(arraycreator())
+#s=set(stopwords.words('english'))
+
+#mostcommon100(wordstripper(arraycreator()))
+mostcommon100(arraycreator())
 
 
 
