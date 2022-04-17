@@ -9,6 +9,10 @@ from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
+import matplotlib
+from os import path
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 
 from nltk.corpus import stopwords
@@ -44,6 +48,7 @@ def arraycreator():
         if w not in stopwords:
             wordsFiltered.append(w)
     #Returns my Words filtered
+    print(wordsFiltered)
     return wordsFiltered
 
 
@@ -71,14 +76,23 @@ def entirefilter(wordarray):
 def wordwriter(bsid, wordarray):
     df = p.read_csv('wordcount.csv')
     #print(df)
+    #print(df)
     if bsid in df.bsid.values:
         print('bsid already created')
     else:
         df2 = p.DataFrame.from_dict(collections.Counter(wordarray),orient='index').reset_index()
+        df2 = df2.rename(columns={'index':'word',0:'count'})
+        print(df2)
         #add bsid onto it
+        #print(df)
         df2['bsid'] = bsid
-        df2 = p.concat([df2,df])
-        df2.to_csv('wordcount.csv', index=True)
+        #df2 = p.concat([df2,df], axis=1)
+        df2=df.append(df2,ignore_index=True)
+        df2.to_csv('wordcount.csv')
         print('Added length  to dataframe')
 
-wordwriter(102,arraycreator())
+wordwriter(103,arraycreator())
+#index,word,count,bsid
+
+#print(collections.Counter(arraycreator()))
+
