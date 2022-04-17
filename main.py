@@ -22,7 +22,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 
 def arraycreator():
     output_string = StringIO()
-    with open('warhammer.pdf', 'rb') as in_file:
+    with open('cba3.pdf', 'rb') as in_file:
         parser = PDFParser(in_file)
         doc = PDFDocument(parser)
         rsrcmgr = PDFResourceManager()
@@ -37,7 +37,7 @@ def arraycreator():
     #This builds out the default stopwords
     stopwords = nltk.corpus.stopwords.words('english')
     #Add some aditional stopwords
-    newstopwords = ['the','and',',','.','(',')','''''',':','’','The',';']
+    newstopwords = ['the','and',',','.','(',')','''''',':','’','The',';','non']
     stopwords.extend(newstopwords)
     for i in newstopwords:
         stopwords.append(i)
@@ -90,7 +90,7 @@ def wordwriter(bsid, wordarray):
 
 #print(collections.Counter(arraycreator()))
 
-wordwriter(350,arraycreator())
+wordwriter(460,arraycreator())
 
 
 #needs the bullshitID to work. Filters the wordcount.csv based on it.
@@ -110,4 +110,4 @@ def wordcloud(bsid):
 
 
 
-wordcloud(350)
+wordcloud(460)
